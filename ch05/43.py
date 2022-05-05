@@ -53,5 +53,11 @@ with open(filename, mode='rt', encoding='utf-8',errors='ignore') as f:
     blocks = f.read().split('EOS\n')
 blocks = list(filter(lambda x: x != '', blocks))
 blocks = [parse_cabocha(block) for block in blocks]
-for m in blocks[2]:
-    print([mo.surface for mo in m.morphs], m.dst, m.srcs)
+for b in blocks:
+    for m in b:
+        pre_text = ''.join([mo.surface if mo.pos != '記号' else '' for mo in m.morphs])
+        pre_pos = [mo.pos for mo in m.morphs]
+        post_text = ''.join([mo.surface if mo.pos != '記号' else '' for mo in b[int(m.dst)].morphs])
+        post_pos = [mo.pos for mo in b[int(m.dst)].morphs]
+        if '名詞' in pre_pos and '動詞' in post_pos:
+            print(pre_text, post_text, sep='\t')

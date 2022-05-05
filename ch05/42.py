@@ -48,10 +48,12 @@ def parse_cabocha(block):
     return res
 
 
-filename = 'ai.ja/ai.ja.txt.parsed'
+filename = 'ai.ja/ai.ja.txt.cabocha'
 with open(filename, mode='rt', encoding='utf-8',errors='ignore') as f:
     blocks = f.read().split('EOS\n')
 blocks = list(filter(lambda x: x != '', blocks))
 blocks = [parse_cabocha(block) for block in blocks]
-for m in blocks[2]:
-    print([mo.surface for mo in m.morphs], m.dst, m.srcs)
+for b in blocks:
+    for m in b:
+        print(''.join([mo.surface if mo.pos != '記号' else '' for mo in m.morphs]),
+              ''.join([mo.surface if mo.pos != '記号' else '' for mo in b[int(m.dst)].morphs]), sep='\t')

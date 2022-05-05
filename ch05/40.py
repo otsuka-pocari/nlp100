@@ -26,7 +26,7 @@ def parse_cabocha(block):
         res.append(Morph(lineDict))
 
 
-filename = 'ai.ja/ai.ja.txt.cabocha'
+filename = 'ai.ja/ai.ja.txt.parsed'
 with open(filename, mode='rt', encoding='utf-8',errors='ignore') as f:
     blocks = f.read().split('EOS\n')
 blocks = list(filter(lambda x: x != '', blocks))
