@@ -1,35 +1,25 @@
 class Morph:
-    def __init__(self, dc):
-        self.surface = dc['surface']
-        self.base = dc['base']
-        self.pos = dc['pos']
-        self.pos1 = dc['pos1']
-
-
-def parse_cabocha(block):
-    res = []
-    for line in block.split('\n'):
-        if line == '':
-            return res
-        elif line[0] == '*':
-            continue
-        contents = line.split('\t')
-        if len(contents) != 2: continue # EOSの排除
-        surface = contents[0]
-        attr = contents[1].split(',')
-        lineDict = {
-            'surface': surface,
-            'base': attr[6],
-            'pos': attr[0],
-            'pos1': attr[1]
-        }
-        res.append(Morph(lineDict))
-
-
+  def __init__(self, morph):
+    (surface, attr) = morph.split('\t')
+    attr = attr.split(',')
+    self.surface = surface
+    self.base = attr[6]
+    self.pos = attr[0]
+    self.pos1 = attr[1]
 filename = 'ai.ja/ai.ja.txt.parsed'
-with open(filename, mode='rt', encoding='utf-8',errors='ignore') as f:
-    blocks = f.read().split('EOS\n')
-blocks = list(filter(lambda x: x != '', blocks))
-blocks = [parse_cabocha(block) for block in blocks]
-for m in blocks[2]:
-    print(vars(m))
+
+sentences = []
+morphs = []
+with open(filename, mode='r',errors='ignore') as f:
+  for line in f:
+    if line[0] == '*':  # 係り受け関係を表す行：スキップ
+      continue
+    elif line != 'EOS\n':  # 文末以外：Morphを適用し形態素リストに追加
+      morphs.append(Morph(line))
+    else:  # 文末：形態素リストを文リストに追加
+      sentences.append(morphs)
+      morphs = []
+
+# 確認
+for m in sentences[2]:
+  print(vars(m))

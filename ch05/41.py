@@ -1,57 +1,49 @@
 class Morph:
-    def __init__(self, dc):
-        self.surface = dc['surface']
-        self.base = dc['base']
-        self.pos = dc['pos']
-        self.pos1 = dc['pos1']
+  def __init__(self, morph):
+    (surface, attr) = morph.split('\t')
+    attr = attr.split(',')
+    self.surface = surface
+    self.base = attr[6]
+    self.pos = attr[0]
+    self.pos1 = attr[1]
 
 
-class Chunk:
-    def __init__(self, morphs, dst):
-        self.morphs = morphs    
-        self.dst = dst          
-        self.srcs = []      
+class Chunk():
+  def __init__(self, morphs, dst):
+    self.morphs = morphs
+    self.dst = dst
+    self.srcs = []
 
 
-def parse_cabocha(block):
-    def check_create_chunk(tmp):
-        if len(tmp) > 0:
-            c = Chunk(tmp, dst)
-            res.append(c)
-            tmp = []
-        return tmp
-
-    res = []
-    tmp = []
-    dst = None
-    for line in block.split('\n'):
-        if line == '':
-            tmp = check_create_chunk(tmp)
-        elif line[0] == '*':
-            dst = line.split(' ')[2].rstrip('D')
-            tmp = check_create_chunk(tmp)
-        else:
-            contents = line.split('\t')
-            if len(contents) != 2: continue # EOSの排除
-            surface = contents[0]
-            attr = contents[1].split(',')
-            lineDict = {
-                'surface': surface,
-                'base': attr[6],
-                'pos': attr[0],
-                'pos1': attr[1]
-            }
-            tmp.append(Morph(lineDict))
-
-    for i, r in enumerate(res):
-        res[int(r.dst)].srcs.append(i)
-    return res
+class Sentence():
+  def __init__(self, chunks):
+    self.chunks = chunks
+    for i, chunk in enumerate(self.chunks):
+      if chunk.dst not in [None, -1]:
+        self.chunks[chunk.dst].srcs.append(i)
 
 
 filename = 'ai.ja/ai.ja.txt.parsed'
-with open(filename, mode='rt', encoding='utf-8',errors='ignore') as f:
-    blocks = f.read().split('EOS\n')
-blocks = list(filter(lambda x: x != '', blocks))
-blocks = [parse_cabocha(block) for block in blocks]
-for m in blocks[2]:
-    print([mo.surface for mo in m.morphs], m.dst, m.srcs)
+
+sentences = []
+chunks = []
+morphs = []
+with open(filename, mode='r',errors='ignore') as f:
+  for line in f:
+    if line[0] == '*':  # 係り受け関係を表す行：直前の文節の情報にChunkを適用し文節リストに追加 + 直後の文節の係り先を取得
+      if len(morphs) > 0:
+        chunks.append(Chunk(morphs, dst))
+        morphs = []
+      dst = int(line.split(' ')[2].rstrip('D'))
+    elif line != 'EOS\n':  # 文末以外：Morphを適用し形態素リストに追加
+      morphs.append(Morph(line))
+    else:  # 文末：直前の文節の情報にChunkを適用し文節リストに追加 + 文節リストにSentenceを適用し文リストに追加
+      chunks.append(Chunk(morphs, dst))
+      sentences.append(Sentence(chunks))
+      morphs = []
+      chunks = []
+      dst = None
+
+# 確認
+for chunk in sentences[2].chunks:
+  print([morph.surface for morph in chunk.morphs], chunk.dst, chunk.srcs)
