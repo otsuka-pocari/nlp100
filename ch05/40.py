@@ -1,25 +1,38 @@
-class Morph:
-  def __init__(self, morph):
-    (surface, attr) = morph.split('\t')
-    attr = attr.split(',')
-    self.surface = surface
-    self.base = attr[6]
-    self.pos = attr[0]
-    self.pos1 = attr[1]
-filename = 'ai.ja/ai.ja.txt.parsed'
+# not done
 
-sentences = []
-morphs = []
-with open(filename, mode='r',errors='ignore') as f:
-  for line in f:
-    if line[0] == '*':  # 係り受け関係を表す行：スキップ
-      continue
-    elif line != 'EOS\n':  # 文末以外：Morphを適用し形態素リストに追加
-      morphs.append(Morph(line))
-    else:  # 文末：形態素リストを文リストに追加
-      sentences.append(morphs)
-      morphs = []
+class Morphs:
+    def __init__(self, morphs):
+        (surface, attr) = morphs.split('\t', 1) # 行を最初の\tで区切る
+        attr = attr.split(',')
+        self.surface = surface # 表層形
+        self.base = attr[5]    # 基本形
+        self.pos = attr[0]     # 品詞形
+        self.pos1 = attr[1]    # 品詞細分類
 
-# 確認
-for m in sentences[2]:
-  print(vars(m))
+
+if __name__ == '__main__':
+    c = 0
+    sentence = []
+    morphs = []
+    fname = 'ai.ja/ai.ja.text.parsed'
+
+    with open(fname, 'r') as f:
+        # 一行ごと処理
+        for line in f:
+            # 係り受け解析、改行のみの行は無視
+            if line[0] == '*' or line == '\n':
+                continue
+
+            # 文末以外の行にてMorphsを取得、リストに追加
+            elif line != 'EOS\n':
+                morphs.append(Morphs(line))
+
+            # 文末（EOS）の行にて取得したMorphsを文ごとのリストにまとめる 
+            else:
+                sentence.append(morphs)
+                morphs = []
+                break
+
+    # 一部を出力
+    for m in sentence[2]:
+        print(vars(m))

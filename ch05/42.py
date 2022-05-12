@@ -54,6 +54,10 @@ if __name__ == '__main__':
                 chunks = []
                 dst = None
 
-    # 出力
-    for chunk in sentences[2].chunks:
-        print([morph.surface for morph in chunk.morphs], chunk.dst, chunk.srcs)
+
+    sentence = sentences[2]
+    for chunk in sentence.chunks:
+        if int(chunk.dst) != -1:
+            modifier = ''.join([morph.surface if morph.pos != '記号' else '' for morph in chunk.morphs])
+            modifiee = ''.join([morph.surface if morph.pos != '記号' else '' for morph in sentence.chunks[int(chunk.dst)].morphs])
+            print(modifier, modifiee, sep='\t')

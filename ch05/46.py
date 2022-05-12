@@ -54,6 +54,21 @@ if __name__ == '__main__':
                 chunks = []
                 dst = None
 
-    # 出力
-    for chunk in sentences[2].chunks:
-        print([morph.surface for morph in chunk.morphs], chunk.dst, chunk.srcs)
+
+with open('./ans46.txt', 'w') as f:
+  for sentence in sentences:
+    for chunk in sentence.chunks:
+      for morph in chunk.morphs:
+        if morph.pos == '動詞':  # chunkの左から順番に動詞を探す
+          cases = []
+          modi_chunks = []
+          for src in chunk.srcs:  # 見つけた動詞の係り元chunkから助詞を探す
+            case = [morph.surface for morph in sentence.chunks[src].morphs if morph.pos == '助詞']
+            if len(case) > 0:  # 助詞を含むchunkの場合は助詞と項を取得
+              cases = cases + case
+              modi_chunks.append(''.join(morph.surface for morph in sentence.chunks[src].morphs if morph.pos != '記号'))
+          if len(cases) > 0:  # 助詞が1つ以上見つかった場合は重複除去後辞書順にソートし、項と合わせて出力
+            cases = sorted(list(set(cases)))
+            line = '{}\t{}\t{}'.format(morph.base, ' '.join(cases), ' '.join(modi_chunks))
+            print(line, file=f)
+          break
