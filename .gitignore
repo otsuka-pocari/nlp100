@@ -3,8 +3,7 @@ ch02/16_*
 *.gz
 *.png
 *.zip
-ch05/ai.ja
-ch06/NewAggregatorDataset
+*.bin
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
