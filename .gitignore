@@ -4,6 +4,8 @@ ch02/16_*
 *.png
 *.zip
 ch05/ai.ja/ai.ja.txt
+*.csv
+*.txt
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
