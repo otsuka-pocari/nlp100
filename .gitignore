@@ -4,6 +4,7 @@ ch02/16_*
 *.png
 *.zip
 *.bin
+ch07/wordsim353
 
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
