@@ -5,7 +5,7 @@
 *.zip
 *.joblib
 *.bin
-ch02/16_*
-ch05/ai.ja
-ch06/NewsAggregatorDataset
-ch07/wordsim353
+/ch02/16_*
+/ch05/ai.ja
+/ch06/NewsAggregatorDataset
+/ch07/wordsim353
