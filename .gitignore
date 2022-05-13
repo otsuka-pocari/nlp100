@@ -1,5 +1,3 @@
-env
-.vscode
 */*.txt*
 *.tsv
 *.gz
@@ -7,11 +5,7 @@ env
 *.zip
 *.joblib
 *.bin
-ch02/ans16_*
-ch05/ai.ja/ai.ja.txt
+ch02/16_*
+ch05/ai.ja
 ch06/NewsAggregatorDataset
 ch07/wordsim353
-logdir
-kftt-data-1.0
-*.pth
-*.pt
