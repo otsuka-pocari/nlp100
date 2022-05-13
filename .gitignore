@@ -1,7 +1,9 @@
 */*.txt*
+*.tsv
 *.gz
 *.png
 *.zip
+*.joblib
 *.bin
 ch02/16_*
 ch05/ai.ja/ai.ja.txt
