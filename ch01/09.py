@@ -1,16 +1,20 @@
 import random
 
+random.seed(0)
 
-def shuffle_word(word):
-    if len(word) <= 4:
-        return word
-    else:
-        start = word[0]
-        end = word[-1]
-        others = random.sample(list(word[1:-1]), len(word[1:-1]))
-        return ''.join([start] + others + [end])
+original_sentence = "I couldn’t believe that I could actually understand what I was reading : the phenomenal power of the human mind ."
 
+modified_words = []
+for original_word in original_sentence.split():
+  if len(original_word) > 4:
+    middle_part = list(original_word[1:-1])
+    random.shuffle(middle_part)
+    modified_words.append(original_word[0] + "".join(middle_part) + original_word[-1])
+  else:
+    modified_words.append(original_word)
+modified_sentence = " ".join(modified_words)
 
-text = 'I couldn’t believe that I could actually understand what I was reading : the phenomenal power of the human mind .'
-ans = [shuffle_word(w) for w in text.split()]
-print(' '.join(ans))
+print("--- Original Sentence ---")
+print(original_sentence)
+print("--- Typoglycemia ---")
+print(modified_sentence)

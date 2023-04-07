@@ -1,10 +1,14 @@
-def cipher(text):
-    text = [chr(219 - ord(w)) if 97 <= ord(w) <= 122 else w for w in text]
-    return ''.join(text)
+def cipher(plaintext):
+  ciphertext = ""
+  for p in plaintext:
+    if ord("a") <= ord(p) <= ord("z"):
+      ciphertext += chr(219 - ord(p))
+    else:
+      ciphertext += p
+  return ciphertext
 
-
-text = 'Hello github.'
-ans = cipher(text)
-print(ans)
-ans = cipher(ans)
-print(ans)
+plaintext = "Now Let's Start The Game!"
+ciphertext = cipher(plaintext)
+print("plaintext: '{0}'".format(plaintext))
+print("Encryption: '{0}' => '{1}'".format(plaintext, ciphertext))
+print("Decryption: '{0}' => '{1}'".format(ciphertext, cipher(ciphertext)))

@@ -1,13 +1,11 @@
-def n_gram(target, n):
-    return [target[idx:idx + n] for idx in range(len(target) - n + 1)]
+def make_character_ngram(sentence, n):
+  return [sentence[i: i + n] for i in range(len(sentence) - (n - 1))]
 
+X = set(make_character_ngram("paraparaparadise", 2))
+Y = set(make_character_ngram("paragraph", 2))
 
-X_text = 'paraparaparadise'
-Y_text = 'paragraph'
-X = n_gram(X_text, 2)
-Y = n_gram(Y_text, 2)
-
-print(f'和集合: {set(X) | set(Y)}')
-print(f'積集合: {set(X) & set(Y)}')
-print(f'差集合: {set(X) - set(Y)}')
-print('se' in (set(X) & set(Y)))
+print("X => {0}".format(list(X)))
+print("Y => {0}".format(list(Y)))
+print("Union => {0}".format(X | Y))
+print("Intersection => {0}".format(X & Y))
+print("Does set X|Y contains 'se'? => {0}".format({"se"} <= (X | Y)))
