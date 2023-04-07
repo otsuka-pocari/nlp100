@@ -1,4 +1,9 @@
-raw_text = 'Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics.'
-text = raw_text.replace('.', '').replace(',', '')
-ans = [len(w) for w in text.split()]
-print(ans)
+import re
+
+s = "Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics."
+words = [re.sub(r"[^A-Za-z]", "", word) for word in s.split()]
+answer = [0 for _ in range(len(words))]
+for i in range(len(words)):
+  answer[i] = len(words[i])
+print("words: {0}".format(words))
+print("answer: {0}".format(answer))

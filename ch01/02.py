@@ -1,9 +1,5 @@
-text0 = 'パトカー'
-text1 = 'タクシー'
-ans = ''
-
-for i in range(len(text0)):
-    ans += text0[i]
-    ans += text1[i]
-
-print(ans)
+s = ["パトカー", "タクシー"]
+answer = ""
+for i in range(len(s[0])):
+  answer += s[0][i] + s[1][i]
+print(answer)
