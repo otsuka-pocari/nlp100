@@ -1,5 +1,9 @@
-import pandas as pd
+f = open("popular-names.txt", "r")
+g = open("11-python.txt", "w")
 
-df = pd.read_csv("popular-names.txt", sep="\t", header=None)
-ans = df.replace("\t", " ")
-print(ans)
+content = f.read()
+content_tab_to_space = content.replace("\t", " ")
+g.write(content_tab_to_space)
+
+f.close()
+g.close()

@@ -1,1 +1,1 @@
-wc -l popular-names.txt
+wc -l popular-names.txt | awk "{print $1}"
