@@ -1,1 +1,1 @@
-paste col1.txt col2.txt >> 13.txt
+paste -d "\t" col1-python.txt col2-python.txt > 13-command.txt

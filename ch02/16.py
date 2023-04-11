@@ -1,9 +1,20 @@
-import sys
-import pandas as pd
+f = open("popular-names.txt", "r")
+lines = f.readlines()
 
-n = 10
-df = pd.read_csv("popular-names.txt", sep="\t", header=None)
-nrow = -(-len(df) // n)
+N = int(input("N => "))
+g = [open("16-python-%2d.txt" % i, "w") for i in range(N)]
+number_of_lines_per_a_file = len(lines) // N
 
-for i in range(n):
-    df.loc[nrow * i:nrow * (i + 1)].to_csv(f"ans16_{i}", sep="\t", index=False, header=None)
+index = 0
+for i in range(N):
+  for j in range(number_of_lines_per_a_file):
+    g[i].write(lines[index])
+    index += 1
+
+while index < len(lines):
+  g[-1].write(lines[index])
+  index += 1
+
+f.close()
+for i in range(N):
+  g[i].close()

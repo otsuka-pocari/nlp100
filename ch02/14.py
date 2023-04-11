@@ -1,7 +1,10 @@
-import pandas as pd
+f = open("popular-names.txt", "r")
+g = open("14-python.txt",  "w")
+lines = f.readlines()
 
+N = int(input("N >= "))
+for i in range(N):
+  g.write(lines[i])
 
-df = pd.read_csv("popular-names.txt", sep="\t", header=None)
-get_row = df.head(5)
-
-print(get_row)
+f.close()
+g.close()

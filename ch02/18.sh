@@ -1,1 +1,1 @@
-sort -r -k 3 -t $'\t' popular-names.txt
+sort -k3,3nr -k1,1r popular-names.txt > 18-command.txt

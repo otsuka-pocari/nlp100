@@ -1,8 +1,13 @@
-import pandas as pd
+f1 = open("col1-python.txt", "r")
+f2 = open("col2-python.txt", "r")
+g = open("13-python.txt", "w")
 
+f1_line_split = f1.read().split()
+f2_line_split = f2.read().split()
 
-c1 = pd.read_csv("col1.txt", header=None)
-c2 = pd.read_csv("col2.txt", header=None)
+for i in range(len(f1_line_split)):
+  g.write(f1_line_split[i] + "\t" + f2_line_split[i] + "\n")
 
-df = pd.concat([c1, c2], axis=1)
-df.to_csv("ans13.txt", sep="\t", index=False, header=None)
+f1.close()
+f2.close()
+g.close()

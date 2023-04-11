@@ -1,1 +1,1 @@
-tail -n $1 popular-names.txt
+echo -n "N => "; read N; tail -n $N popular-names.txt > 15-command.txt

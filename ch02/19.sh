@@ -1,1 +1,1 @@
-cut -f1 -d$'\t' popular-names.txt | LANG=C sort | uniq -c | sort -r -k 2 -t ' '
+cut -f 1 popular-names.txt |sort | uniq -c | sort -r -n -k 1 > 19-command.txt
