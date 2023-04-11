@@ -1,3 +1,3 @@
-s = "パタトクカシーー"
-answer = s[0] + s[2] + s[4] + s[6]
+text = "パタトクカシーー"
+answer = text[0] + text[2] + text[4] + text[6]
 print(answer)
