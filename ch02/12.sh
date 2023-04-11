@@ -1,2 +1,2 @@
-cut -f1 -d$'\t' popular-names.txt >> col1.txt
-cut -f2 -d$'\t' popular-names.txt >> col2.txt
+cut -f 1 popular-names.txt > col1-command.txt
+cut -f 2 popular-names.txt > col2-command.txt
