@@ -5,6 +5,7 @@
 *.zip
 *.joblib
 *.bin
+*.json
 ch02/16_*
 ch02/ans16_*
 ch05/ai.ja
