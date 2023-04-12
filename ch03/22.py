@@ -1,9 +1,18 @@
-import pandas as pd
+import json
+import re
 
 
-df = pd.read_json('jawiki-country.json.gz', lines=True)
-uk_text = df.query('title=="イギリス"')['text'].values[0]
-uk_texts = uk_text.split('\n')
-ans = list(filter(lambda x: '[Category:' in x, uk_texts))
-ans = [a.replace('[[Category:', '').replace('|*', '').replace(']]', '') for a in ans]
-print(ans)
+def get_UKdata():
+  f = open("jawiki-country.json", "r")
+  lines = f.readlines()
+  for line in lines:
+    json_data = json.loads(line)
+    if json_data["title"] == "イギリス":
+      f.close()
+      return json_data["text"]
+
+data = get_UKdata()
+categories_plain = re.findall(r"\[\[Category:(.+?)(?:\||\]\])", data)
+
+for category_plain in categories_plain:
+  print(category_plain)
